@@ -1,0 +1,63 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Broadcast Message Form</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+
+<style>
+.myform {
+  margin: 70px 450px;
+}
+</style>
+
+
+<div class="myform">
+<div class="jumbotron">
+	<h3>Create an Audio Broadcast</h3>
+	<br>
+<form action="" method="POST">
+  {% csrf_token %}
+ <div iclass="form-select">
+  <label> Theme:</label>
+  <select name="themeid">
+    {% for theme in themes %}
+    <option value="{{ theme.pk }}">{{ theme.theme }}</option>
+  {% endfor %}
+</select>
+</div>
+
+ <div iclass="form-select">
+ <label> Audio:</label>
+  <select name="audioid">
+     {% for aud in audios %}
+    <option value="{{ aud.pk }}">{{ aud.name }}</option>
+  {% endfor %}
+  <!-- Add more options as needed -->
+</select>
+</div>
+
+ <div iclass="form-select">  <label> Category:</label>
+  <select name="catid">
+    {% for cat in categories %}
+    <option value="{{ cat.pk }}">{{ cat.catName }}</option>
+  {% endfor %}
+  <!-- Add more options as needed -->
+</select>
+</div>
+
+
+  <br>
+  <button type="submit" class="btn btn-primary">Send Audio Broadcast</button>
+  <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>
+</form>
+</div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,146 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Report</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+<div class="row">
+	<div class="col-md-12">
+		<h5>Report</h5>
+		<hr>
+		<div class="card card-body">
+			    <!-- Add search forms with dropdowns for each field -->
+    <form method="get" action="{% url 'deliverylist' %}">
+       <label> Search by project:</label>
+        <select name="projectsearch">
+            <option value="" {% if not search_term_project %}selected{% endif %}>-- All --</option>
+            {% for value in distinct_project_values %}
+			<option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+            <!-- Add more options for search_field1 as needed -->
+        </select>
+       
+       
+		<label> Search by region:</label>
+        <select name="regionsearch">
+            <option value="" {% if not search_term_region %}selected{% endif %}>-- All --</option>
+            {% for value in distinct_region_values %}
+			<option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+            <!-- Add more options for search_field2 as needed -->
+        </select>
+       
+		<label> Search by district:</label>
+        <select name="districtsearch">
+            <option value="" {% if not search_term_district %}selected{% endif %}>-- All --</option>
+            {% for value in distinct_district_values %}
+			<option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+            <!-- Add more options for search_field2 as needed -->
+        </select>
+       
+		<label> Search by gender:</label>
+        <select name="gendersearch">
+            <option value="" {% if not search_term_gender %}selected{% endif %}>-- All --</option>
+            {% for value in distinct_gender_values %}
+			<option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+            <!-- Add more options for search_field2 as needed -->
+        </select>
+        
+      
+			<label for="start_date">Start Date:</label>
+			<input type="date" id="start_date" name="start_date">
+
+			<label for="end_date">End Date:</label>
+			<input type="date" id="end_date" name="end_date">
+
+        
+        
+        <button type="submit">Search</button>
+    </form>
+	
+	<div class="col-md">				
+    <a class="btn btn-sm btn-primary active" href="{% url 'download' %}?projectsearch={{ search_term_project }}&regionsearch={{ search_term_region }}&districtsearch={{ search_term_district }}&gendersearch={{ search_term_gender }}&download=true">Download Excel</a>
+	    <a class="btn btn-sm btn-primary active" href="{% url 'sync' %}">Sync data</a>
+
+	</div>
+			<br/>
+			<br/>
+			<table class="table table-sm table-striped">
+				<thead class="thead-dark">
+				<tr>
+					<th>Delivery Status</th>
+					<th>SMS Type</th>
+					<th>Recipient Phone</th>
+					<th>Total Sent</th>
+					<th>Total Rejected</th>
+					<th>Credit Used</th>
+					<th>Credit Left</th>
+					<th>Recipient Name</th>
+					<th>Sex</th>
+					<th>Project</th>
+					<th>Region</th>
+					<th>District</th>
+					<th>Answer time</th>
+					<th>Hang up time</th>
+					<th>Period</th>
+					<th>call id</th>
+					<th>Date</th>
+					<th></th>
+				</tr>
+				</thead>
+				
+				{% for delivery in delivs %}
+				<tr>	
+					<td>{{ delivery.sms_status}}</td>
+					<td>{{ delivery.smstype}}</td>
+					<td>{{ delivery.recipient }}</td>
+					<td>{{ delivery.total_sent }}</td>
+					<td>{{ delivery.total_rejected }}</td>
+					<td>{{ delivery.credit_used }}</td>
+					<td>{{ delivery.credit_left }}</td>
+					<td>{{ delivery.name }}</td>
+					<td>{{ delivery.gender }}</td>
+					<td>{{ delivery.project }}</td>
+					<td>{{ delivery.region }}</td>
+					<td>{{ delivery.district }}</td>
+					<td>{{ delivery.answer_time }}</td>
+					<td>{{ delivery.hang_up_time }}</td>
+					<td>{{ delivery.answer_period }}</td>
+					<td>{{ delivery.call_id }}</td>
+					<td>{{ delivery.date_created }}</td>
+					{% if delivery.sms_status != "success" %}
+					<td><a class="btn btn-sm btn-warning active" >Resend</a></td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+				
+			</table>
+		</div>
+	</div>
+
+
+<script>
+function validateDateRange() {
+    var startDate = new Date(document.getElementById('start_date').value);
+    var endDate = new Date(document.getElementById('end_date').value);
+
+    if (endDate < startDate) {
+        alert('End date cannot be earlier than the start date.');
+        return false; // Prevent form submission
+    }
+
+    return true; // Allow form submission
+}
+</script>
+{% endblock %}
+
+

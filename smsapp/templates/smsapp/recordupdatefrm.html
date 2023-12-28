@@ -1,0 +1,42 @@
+{% extends 'smsapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} <title>Record Form</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+
+<style>
+.myform {
+  margin: 70px 400px;
+}
+</style>
+
+  
+
+
+
+
+<div class="myform">	
+<div class="jumbotron">
+	<h3>Registration</h3>
+	<br>
+<form method="POST" id="recordForm" data-grades-url="{% url 'ajax_load_grades' %}" empnumbvalidate-url="{% url 'validate_empnumber' %}">
+  {% csrf_token %}
+	
+  {{fm|crispy}}
+  <button type="submit" class="btn btn-primary">Submit Changes</button>
+</form>
+</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+{% endblock %}
+

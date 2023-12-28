@@ -1,0 +1,87 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Response Log</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+<div class="row">
+	<div class="col-md-12">
+		<h5>Response Log</h5>
+		<hr>
+		<div class="card card-body">
+			    <!-- Add search forms with dropdowns for each field -->
+    <form method="get" action="{% url 'responselog' %}">
+       <label for="start_date">Start Date:</label>
+			<input type="date" id="start_date" name="start_date">
+
+			<label for="end_date">End Date:</label>
+			<input type="date" id="end_date" name="end_date">
+
+        
+        <button type="submit">Search</button>
+        
+        
+    </form>
+    
+    <div class="col-md">				
+    <a class="btn btn-sm btn-primary active" href="{% url 'download' %}?projectsearch={{ search_term_project }}&regionsearch={{ search_term_region }}&districtsearch={{ search_term_district }}&gendersearch={{ search_term_gender }}&download=true">Resend all</a>
+	</div>
+			<br/>
+			<br/>
+			<table class="table table-sm table-striped">
+				<thead class="thead-dark">
+				<tr>
+					<th>Delivery Status</th>
+					<th>Error Code</th>
+					<th>Error Message</th>
+					<th>Sms Type</th>
+					<th>Recipient</th>
+					<th>Name</th>
+					<th>Date</th>
+					<th></th>
+				</tr>
+				</thead>
+				
+				{% for log in logs %}
+				<tr>	
+					<td>{{ log.status}}</td>
+					<td>{{ log.code}}</td>
+					<td>{{ log.message }}</td>
+					<td>{{ log.smstype }}</td>
+					<td>{{ log.recipient }}</td>
+					<td>{{ log.name }}</td>
+					<td>{{ log.timestamp }}</td>
+					{% if logs.status != "success" %}
+					<td><a class="btn btn-sm btn-warning active" >Resend</a></td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+				
+			</table>
+		</div>
+	</div>
+
+
+<script>
+function validateDateRange() {
+    var startDate = new Date(document.getElementById('start_date').value);
+    var endDate = new Date(document.getElementById('end_date').value);
+
+    if (endDate < startDate) {
+        alert('End date cannot be earlier than the start date.');
+        return false; // Prevent form submission
+    }
+
+    return true; // Allow form submission
+}
+</script>
+{% endblock %}
+
+

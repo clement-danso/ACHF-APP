@@ -1,0 +1,47 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Records</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md">
+			<a class="btn btn-md btn-primary" href="{% url 'createvoicetemplate' %}">Create Voice Template</a>
+		</div>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm table-striped">
+				<thead class="thead-dark">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>File</th>
+					<th>Delete</th>
+				</tr>
+				</thead>
+				{% for audio in audios %}
+				<tr>
+					<td>{{ audio.name }}</td>
+					<td>{{ audio.description }}</td>
+					<td>{{ audio.file }}</a></td>
+					<td><a class="btn btn-sm btn-danger" disabled>Delete</a></td>
+				</tr>
+				{% empty %}
+				<tr>
+				  <td colspan="10" class="text-center bg-warning">No Records</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+	
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Broadcast Notification</title> {% endblock %}
+
+{% block content %}
+
+
+
+<style>
+.myform {
+  margin: 70px 400px;
+}
+</style>
+
+  
+
+
+
+
+<div class="myform">	
+<div class="jumbotron">
+	<b>Hello, {{request.user}}</b> <br>
+	<p>You are about to send this message to <span style="color:blue">{{ recodsnum }} worker(s)</span>  registered on this system.</p>
+	<p>If you want to continue,complete the fields below and click 'Send Broadcast'</p>
+	<br>
+<form action="" method="POST">
+  {% csrf_token %}
+	
+  {{fm.as_p}}
+  <br>
+  <button type="submit" class="btn btn-primary">Send Broadcast</button>
+  <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>
+  
+  <p><span style="color:maroon">After clicking 'Send Broadcast', do not leave the page until all messages are sent.</span></p>
+</form>
+					
+					
+					
+</div>
+</div>
+
+{% endblock %}
+

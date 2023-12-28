@@ -1,0 +1,148 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Dashboard</title> {% endblock %}
+
+{% block content %}
+
+<br>
+<div class="row">
+	
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-dark mb-3" id="total orders">
+				<div class="card-header">
+					<h5 class="card-title">Voice Call Balance:</h5>
+				</div>
+				<div class="card-body">
+					<table class="table table-sm">
+				<tr>
+					<th>Message Cat 1</th>
+					<th>Message Cat 2</th>
+					<th>Message Cat 3</th>
+				</tr>
+				<tr>
+					<td>{{ recodsnum }}</td>
+					<td>{{ activenum }}</td>
+					<td>{{ inactivenum }}</td>
+				</tr>
+				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'vcriteria' %}">Create Voice Broadcast</a>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-dark mb-3" id="orders delivered">
+				<div class="card-header">
+					<h5 class="card-title">SMS Balance:</h5>
+				</div>
+				<div class="card-body">
+					<table class="table table-sm">
+				<tr>
+					
+					<th>Message Cat 1</th>
+					
+					<th>Message Cat 2</th>
+					<th>Message Cat 3</th>
+					
+					<th>Message Cat 4</th>
+				</tr>
+				
+				<tr>
+					
+					<td>{{ bdaysms }}</td>
+					
+					<td>{{ annisms }}</td>
+					<td>{{ welsms }}</td>					
+					<td>{{ bsms }}</td>
+				</tr>
+				<a class="btn btn-primary btn-sm btn-block" href="{% url 'bcriteria' %}">Create SMS Broadcast</a>
+						 
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- <div class="row">
+	<div class="col-md-7">
+		<div class="col-md-7">
+		<h5>New Registrations (Last 5):</h5>
+		</div>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm table-striped table-responsive">
+				<thead class="thead-dark">
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>District</th>
+					<th>Bmc</th>
+					<th>Grade</th>
+					<th>Timestamp</th>
+					
+					
+				</tr>
+				</thead>
+				{% for record in recods %}
+				<tr>
+					<td>{{ record.FirstName }}</a></td>
+					<td>{{ record.LastName }}</td>
+					<td>{{ record.bmc.subdistrict.district }}</td>
+					<td>{{ record.bmc }}</td>
+					<td>{{ record.grade }}</td>
+					<td>{{ record.date_created }}</td>
+					
+					
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div> -->
+
+	<div class="col-md-12">
+		<h5>Sent Notifications (Last 5):</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm table-striped table-responsive">
+				<thead class="thead-dark">
+				<tr>
+					<th>Delivery Status</th>
+					<th>Recipient</th>
+					<th>Total Sent</th>
+					<th>Total Rejected</th>
+					<th>Credit Used</th>
+					<th>Credit Left</th>
+					<th>Timestamp</th>
+				</tr>
+				</thead>
+				
+				{% for delivery in deliveries %}
+				<tr>	
+					<td>{{ delivery.sms_status}}</td>
+					<td>{{ delivery.recipient }}</td>
+					<td>{{ delivery.total_sent }}</td>
+					<td>{{ delivery.total_rejected }}</td>
+					<td>{{ delivery.credit_used }}</td>
+					<td>{{ delivery.credit_left }}</td>
+					<td>{{  delivery.date_created }}</td>
+					
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+</div
+
+{% endblock %}
+

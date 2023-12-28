@@ -1,0 +1,136 @@
+{% extends 'smsapp/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} <title>Records</title> {% endblock %}
+
+
+
+
+
+{% block content %}
+<style>
+a {
+    font-size: 10px;
+    color: #222222;
+}
+</style>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-10">
+			
+<p>
+    <button type="button" class="btn btn-primary js-create-record">
+      <span class="glyphicon glyphicon-plus"></span>
+      Add Record
+    </button>
+</p>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					
+				
+					
+					<form class="form-inline">
+						<span class="navbar-toggler-icon"><input class="form-control mr-sm-2" type="text" /> </span>
+						
+						<button class="btn btn-primary my-2 my-sm-0" type="submit">
+							Search
+						</button>
+					</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1.5">
+			<ul class="nav flex-column nav-pills">
+				<li class="nav-item">
+					<b><a class="nav-link active" href="#">All Records</a></b>
+				</li>
+				<li class="nav-item">
+					<b><a class="nav-link" href="#">Recently Added</a></b>
+				</li>	
+				<li class="nav-item">
+					<b><a class="nav-link" href="#">Recently Updated</a></b>
+				</li>
+				<li class="nav-item">
+					<b><a class="nav-link" href="#">Recently Deleted</a></b>
+				</li>		
+			</ul>
+		</div>
+		<div class="col-md-8">
+			<table class="table table-bordered">
+				<tr>
+					<th>Emp. No</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>DOB</th>
+					<th>Official Email</th>
+					<th>Mobile</th>
+					<th>Bmc</th>
+					<th>Status</th>
+				</tr>
+				{% for record in recods %}
+				<tr>
+					<td><a class="js-edit-record" href="#">{{ record.EmpNumber }}</a></td>
+					<td>{{ record.FirstName }}</td>
+					<td>{{ record.LastName }}</td>
+					<td>{{ record.DOB }}</td>
+					<td>{{ record.OfficialEmail }}</td>
+					<td>{{ record.Mobile }}</td>
+					<td>{{ record.bmc }}</td>
+					<td>{{ record.status }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+			<nav>
+				<ul class="pagination">
+					<li class="page-item">
+						<a class="page-link" href="#">Previous</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">1</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">2</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">3</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">4</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">5</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">Next</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-md-2.5">
+			<form method="POST" id="updaterecordform" data-update="{% url 'ajax_load_grades' %}">
+			  {% csrf_token %}
+				
+			  {{fm|crispy}}
+			  <a class="btn btn-sm btn-info" href="">Update</a>
+			  <a class="btn btn-sm btn-info" href="">Delete</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- THE MODAL WE WILL BE USING -->
+  <div class="modal fade" id="modal-records">
+    <div class="modal-dialog">
+      <div class="modal-content">
+		  </div>
+      </div>
+    </div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,117 @@
+{% extends 'smsapp/base.html' %}
+
+{% load static %}
+
+{% block title %} <title>Broadcast criteria</title> {% endblock %}
+
+{% block content %}
+
+
+
+<style>
+.myform {
+  margin: 70px 400px;
+}
+
+.form-select {
+    display: none;   
+}   
+</style>
+
+  
+
+
+
+
+<div class="myform">	
+<div class="jumbotron">
+	<b>Hello, {{request.user}}</b> <br>
+	<p>Before you continue, by which criteria do you want to select records for the broadcast?</p>
+	<br>
+<form action="{% url 'bcriteria' %}" method="POST">
+  {% csrf_token %}
+	
+				
+						  <label for="criteria">Select a criteria:</label>
+							<select name="criteria" id="criteria">
+							  <option value="1">Project</option>
+							  <option value="2">Age range</option>
+							  <option value="3">Region</option>
+							  <option value="4">District</option>
+							 <option value="5">Pregnancy status</option>
+							 <option value="6">Lactating status</option>
+							 <option value="7">Caregiver status</option>
+							 <option value="8">All</option>
+							</select>
+					
+					
+					<div id="1" class="form-select" style="display: block">
+							 <label for="project">Select a project:</label>
+							<select id="project" name="project">
+							{% for project in projects %}
+								<option value="{{ project.id}}">{{ project.projectName }}</option>
+							{% endfor %}
+							</select>
+					</div>
+					<div id="2" class="form-select">
+					<div>
+							<label for="minage">Age (Min):</label>
+							<input type="number" id="minage" name="minage" min="1">
+							<label for="maxage">Age (Max):</label>
+							<input type="number" id="maxage" name="maxage" min="1">
+					</div>
+					</div>
+					<div id="3" class="form-select">
+						 <label for="region">Select a region:</label>
+							<select id="region" name="region">
+							{% for region in regions %}
+								<option value="{{ region.id}}">{{ region.regionName }}</option>
+							{% endfor %}
+							</select>
+					</div>
+					<div id="4" class="form-select">
+						 <label for="district">Select a district:</label>
+					  <select id="district" name="district">
+							{% for district in districts %}
+								<option value="{{ district.id}}">{{ district.districtName }}</option>
+							{% endfor %}
+							</select>
+
+					</div>
+					<div id="5" class="form-select">
+						<label for="yesno">Criteria status:</label>
+							<select id="yesno" name="yesno">
+							  <option value="yes">Yes</option>
+							  <option value="no">No</option>
+							</select>
+
+					</div>
+					<div id="6" class="form-select">
+						<label for="yesno1">Criteria status:</label>
+							<select id="yesno1" name="yesno1">
+							  <option value="yes">Yes</option>
+							  <option value="no">No</option>
+							</select>
+
+					</div>
+					<div id="7" class="form-select">
+					  <label for="yesno2">Criteria status:</label>
+							<select id="yesno2" name="yesno2">
+							  <option value="yes">Yes</option>
+							  <option value="no">No</option>
+							</select>
+
+</div>
+
+						
+					<br><br>
+					<a type="button" class="btn btn-secondary" href="{% url 'home' %}">Cancel</a>
+					<button type="submit" class="btn btn-primary" >Continue</button>
+					
+</form>
+</div>
+</div>
+
+{% endblock %}
+
+

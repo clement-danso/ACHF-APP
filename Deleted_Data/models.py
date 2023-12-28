@@ -1,0 +1,25 @@
+from django.db import models
+
+# Create your models here.
+class records(models.Model):
+	EmpNumber = models.CharField(max_length=15,primary_key=True, verbose_name='Employment Number')
+	Title = models.CharField(max_length=11, choices=TITLE, default=TITLE[0][0], blank=True)
+	FirstName = models.CharField(max_length=50, verbose_name='First Name')
+	LastName = models.CharField(max_length=50, verbose_name='Last Name')
+	OtherName = models.CharField(max_length=50, verbose_name='Other Name', blank=True)
+	Gender = models.CharField(max_length=10, choices=GENDER)
+	DOB = models.DateField(verbose_name='Date of Birth')
+	MaritalStatus = models.CharField(max_length=10, choices=MARITAL_STATUS, verbose_name='Marital Status')
+	Religion = models.CharField(max_length=10, choices=RELIGION, blank=True)
+	OfficialEmail= models.CharField(max_length=50,verbose_name='Official Email', unique=True, blank=True)
+	PersonalEmail= models.CharField(max_length=50, verbose_name='Personal Email', unique=True, blank=True)
+	Mobile = models.CharField(max_length=10, verbose_name='1st Mobile', unique=True)
+	Mobile1 = models.CharField(max_length=10,verbose_name='2nd Mobile', unique=True, blank=True)
+	FirstAppDate = models.DateField(verbose_name='First Appointment Date')
+	AssumptionDutyDate= models.DateField(verbose_name='Date of Assumption of Duty')
+	category = models.ForeignKey(category, null=True, verbose_name='Category', on_delete=models.SET_NULL)
+	grade = models.ForeignKey(grade, null=True, on_delete=models.SET_NULL)
+	bmc = models.ForeignKey(bmc, null=True, verbose_name='BMC', on_delete=models.SET_NULL)
+	unit = models.ForeignKey(unit, null=True, on_delete=models.SET_NULL)
+	status = models.CharField(max_length=10, choices=STATUS, default=STATUS[0][0]) 
+	reason = models.CharField(max_length=50, choices=STATUS, default=STATUS[0][0])

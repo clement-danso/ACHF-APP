@@ -1,0 +1,209 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %} <title>Base Template</title> {% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<!-- CDN links -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  
+<!--links to static files-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/sticky-footer-navbar.css' %}">
+  
+  
+
+</head>
+
+<body id="index" class="home">
+
+	<details>
+  <summary>Notification Desk</summary>
+  <p><h2>Wear a mask, Clean your hands, Keep a safe distance</h2></p>
+	</details>
+
+
+<header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">
+			<!--<img src="{% static 'images/xxx.jpeg' %}" alt="Logo" style="width:40px;">-->
+			<b>ACHF</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+				<a class="nav-link" href="{% url 'recordlist' %}">Voice Templates</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'deliverylist' %}">Sent Notifications</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'responselog' %}">Response Logs</a>
+			</li>
+          </ul>
+          
+          {% if user.is_authenticated %}
+		  <span>
+			  <li class="nav-item">
+				<a class="nav-link" href=""><b>Hello, {{request.user}}</b></a>
+			  </li>
+		  </span>
+		  <span>
+			   <li class="nav-item">
+				<a class="nav-link" href="{% url 'logoutuser' %}"><b>Logout</b></a>
+			  </li>
+		  </span>
+		  {% else %}
+		   <span>
+			   <li class="nav-item">
+				<a class="nav-link" href="{% url 'login' %}"><b>Login</b></a>
+			  </li>
+		  </span>
+		  {%  endif %}
+        </div>
+        
+        
+      </nav>
+</header>
+<main role="main" class="container">
+	<div class="row">
+		<div class="col-md-12">
+			{% if messages %}
+			{% for message in messages.get_messages %}
+				{% if 'saving' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+				{% elif 'saved' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+				{% elif 'authenticating' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+				{% elif 'authenticated' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+				{% elif 'retrieving' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+				{% elif 'sending' in message.tags %}
+					<div class="alert alert-{{message.tags}}">
+						{{ message }}
+					</div>
+			{% endif %}
+			{% endfor %}
+			{% endif %}
+			
+
+		</div>
+	</div>
+</main>
+{% block content %}
+<br><br>
+
+
+{% endblock %}
+
+
+
+
+
+
+</body>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+ <script>
+    $("#id_category").change(function () {
+      const url = $("#recordForm").attr("data-grades-url");  // get the url of the `load_cities` view
+      const categoryId = $(this).val();  // get the selected country ID from the HTML input
+      
+      
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load_grades/)
+        data: {
+          'category_id': categoryId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          console.log(data);
+          $("#id_grade").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+ </script>
+ 
+<script>
+	$("#id_EmpNumber").change(function () {
+		const empnumber = $(this).val();
+		const url = $("#recordForm").attr("empnumbvalidate-url");
+		console.log( $(this).val() );
+
+		$.ajax({
+           url: url,
+           data: {
+			'EmpNumber': empnumber       // add the country id to the GET parameters
+		   },
+		   
+		   success: function (data) {
+			   if (data.is_taken){
+				   alert("A record with this Employment Number already exists.")
+			   }
+			}
+        });
+    });
+</script>
+ 
+<script>
+    $(".js-create-record").click(function () {
+      $.ajax({                       // initialize an AJAX request
+        url: "{% url 'record_create' %}",                    // set the url of the request (= localhost:8000/hr/ajax/load_grades/)
+		type: 'get',
+		dataType: 'json',
+		beforeSend: function(){
+			$("#modal-records").modal("show");
+		},
+        success: function (data) {
+        $("#modal-records .modal-content").html(data.html_form);
+      	}
+      });
+
+    });
+ </script>
+ 
+ 
+<script type="text/javascript">
+window.onload = function(){
+document.getElementById('criteria').onchange = function() {
+    var i = 1;
+    var myDiv = document.getElementById(i);
+    while(myDiv) {
+        myDiv.style.display = 'none';
+        myDiv = document.getElementById(++i);
+    }
+    document.getElementById(this.value).style.display = 'block';
+}};
+</script> 
+
+ <noscript>
+         Sorry...JavaScript is needed to go ahead.
+ </noscript>
+
+</html>
