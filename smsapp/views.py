@@ -116,7 +116,7 @@ def createrecord(request):
 			
 			
 			endPoint = 'https://api.mnotify.com/api/sms/quick'
-			apiKey = 'rT5L5lrhhoCaP0BfKlSU9dNh6Vqp5RFwLKhQ6I8n7KyWL'
+			apiKey = 'AWpWKxyyfhRPgyR60yu0PFlVS'
 			data = {
 				'recipient[]': fon,
 				'sender': 'HR WNRHD',
@@ -414,7 +414,7 @@ def createvoicebroad(request):
 			ffone=f"0{fone}"
 			print(ffone)
 			endPoint = 'https://api.mnotify.com/api/voice/quick'
-			apiKey = 'rT5L5lrhhoCaP0BfKlSU9dNh6Vqp5RFwLKhQ6I8n7KyWL'
+			apiKey = 'AWpWKxyyfhRPgyR60yu0PFlVS'
 			files = {'file': open(VOICEFILE_path, 'rb')}
 			print(files)
 			payload = {
@@ -582,7 +582,7 @@ def createbmessagecat(request):
 			ffone=ffone=f"0{fone}"
 			print(recod['phone'])
 			endPoint = 'https://api.mnotify.com/api/sms/quick'
-			apiKey = 'rT5L5lrhhoCaP0BfKlSU9dNh6Vqp5RFwLKhQ6I8n7KyWL'
+			apiKey = 'AWpWKxyyfhRPgyR60yu0PFlVS'
 			data = {
 			   'recipient[]': ffone,
 			   'sender': 'HR WNRHD',
@@ -665,7 +665,7 @@ def createbmessageall(request):
 			fone=[recod.Mobile]
 			ffone=f"0{fone}"
 			endPoint = 'https://api.mnotify.com/api/sms/quick'
-			apiKey = 'rT5L5lrhhoCaP0BfKlSU9dNh6Vqp5RFwLKhQ6I8n7KyWL'
+			apiKey = 'AWpWKxyyfhRPgyR60yu0PFlVS'
 			data = {
 			   'recipient[]': ffone,
 			   'sender': 'HR WNRHD',
@@ -715,7 +715,7 @@ def messtemp(request):
 		cont=request.POST.get('Content')
 		
 		endPoint = 'https://api.mnotify.com/api/template'
-		apiKey = 'rT5L5lrhhoCaP0BfKlSU9dNh6Vqp5RFwLKhQ6I8n7KyWL'
+		apiKey = 'AWpWKxyyfhRPgyR60yu0PFlVS'
 		data = {
 		   'title': tit,
 		   'content': cont
